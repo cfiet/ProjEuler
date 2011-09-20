@@ -12,15 +12,13 @@ generatePrimes =
 	generatePrimes_ [] candidates
 
 generatePrimes_ :: [Integer] -> [Integer] -> [Integer]
-generatePrimes_ currentPrimes (x:candidates) =
-	if (isPrime currentPrimes x) then 
-		generatePrimes_ (currentPrimes ++ [x]) candidates
-	else
-		generatePrimes_ currentPrimes candidates
-		
+generatePrimes_ primes (x:c)
+   | (isPrime primes x) = x : generatePrimes_ (x:primes) c
+   | otherwise = generatePrimes_ primes c
+
 generatePrimes_ currentPrimes [] =
 	currentPrimes
 		
 		
 main =
-	putStrLn $ show $ take 2 generatePrimes
+	putStrLn $ show $ last $ take 10001 $ generatePrimes
