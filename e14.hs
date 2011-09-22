@@ -36,7 +36,5 @@ main = do
 	writeArray p 1 1
 	d <- getMaxDistance p (0,0) [999999, 999997..500000]
 	putStrLn $ show d
-	c <- getElems p
-	putStrLn . show . length $ filter (==(-1)) c
 
 
