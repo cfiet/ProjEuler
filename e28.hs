@@ -48,17 +48,25 @@
 --
 -- So from: s(x) = 2x - 1 = 1001 we get that: x = 501, so we need to calculate
 -- the sum of numbers on diagonal of spiral of 501st level.
+--
+-- Afterthought:
+-- We can even do diag1+diag2+diag3+diag4 -> a = 16, b = -28, c = 16 and 
+-- calculate the sum of the corners of each level > 1.
 
-diag :: (Int, Int, Int) -> (Int -> Int)
-diag (a,b,c) = (\n -> a*n*n + b*n + c)
+quadr :: (Int, Int, Int) -> (Int -> Int)
+quadr (a,b,c) = (\n -> a*n*n + b*n + c)
 
-diag1 n = diag (4, -10, 7) n
-diag2 n = diag (4, -8, 5) n
-diag3 n = diag (4, -6, 3) n
-diag4 n = diag (4, -4, 1) n
+diag1 n = quadr (4, -10, 7) n
+diag2 n = quadr (4, -8, 5) n
+diag3 n = quadr (4, -6, 3) n
+diag4 n = quadr (4, -4, 1) n
+
+diagSum n = quadr (16, -28, 16) n
 
 diagNumbers :: Int -> [Int]
 diagNumbers 1 = [1]
 diagNumbers n = (diagNumbers (n-1)) ++ [diag1 n, diag2 n, diag3 n, diag4 n]
 
-main = putStrLn $ show $ sum $ diagNumbers 501
+main = do
+	putStrLn $ show $ sum $ diagNumbers 501
+	putStrLn $ show $ sum $ 1 : (map diagSum [2..501])
