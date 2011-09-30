@@ -13,7 +13,8 @@ foldDivisors m (k:ks) a
 getDivisors :: M.Map Integer [Integer] -> Integer -> M.Map Integer [Integer]
 getDivisors m a =
     let v = [k | k <- M.keys m, k > 1, k <= (floor . sqrt . fromInteger $ a)]
-        d = L.nub $ (1 : foldDivisors m v a)
+        w = if a `mod` 2 == 0 then v else [k | k <- v, k `mod` 2 /= 0]
+        d = L.nub $ (1 : foldDivisors m w a)
         in M.insert a d m
  
 generateDivisors m [] = m
